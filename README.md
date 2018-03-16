@@ -27,9 +27,9 @@ Navigate to theme directory and install Node Packages
     * Search for: `'asap_s'` and replace with: `'<project-name>'` (inside single quotations) to capture the text domain.
     * Search for: `asap_s_` and replace with: `<project-name>_` to capture all the function names.
     * Search for: `Text Domain: asap_s` and replace with: `Text Domain: <project-name>` in style.css.
-    * Search for: `&nbsp;asap_s` and replace with: `&nbsp;<project-name>` (with a space before it) to capture DocBlocks.
+    * Search for: ` asap_s` and replace with: ` <project-name>` (with a space before it) to capture DocBlocks.
     * Search for: `asap_s-` and replace with: `<project-name>-` to capture prefixed handles.
-2. Update BrowserSync proxy in file `gulpfile.js`
+2. Update BrowserSync proxy
     
         proxy: 'local.<project-name>.com'
     
