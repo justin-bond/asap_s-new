@@ -11,28 +11,28 @@ var plumber = require('gulp-plumber');
 var sourcemaps = require('gulp-sourcemaps');
 
 var notifyGeneric = {
-    title: function () {
-        return '<%= file.relative %>';
-    },
-    onLast: true,
-    subtitle: "Successfully Compiled",
-    message: "@ Time: <%= options.hour %>:<%= options.minute %>:<%= options.second %> ",
-    templateOptions: {
-        hour: new Date().getHours(),
-        minute: new Date().getMinutes(),
-        second: new Date().getSeconds()
-    }
+  title: function () {
+    return '<%= file.relative %>';
+  },
+  onLast: true,
+  subtitle: "Successfully Compiled",
+  message: "@ Time: <%= options.hour %>:<%= options.minute %>:<%= options.second %> ",
+  templateOptions: {
+    hour: new Date().getHours(),
+    minute: new Date().getMinutes(),
+    second: new Date().getSeconds()
+  }
 };
 
 var onError = function(err) {
-    notify.onError({
-                title:    "Gulp",
-                subtitle: "Failure!",
-                message:  "Error: <%= error.message %>",
-                sound:    "Sosumi"
-            })(err);
+  notify.onError({
+    title:    "Gulp",
+    subtitle: "Failure!",
+    message:  "Error: <%= error.message %>",
+    sound:    "Sosumi"
+  })(err);
 
-    this.emit('end');
+  this.emit('end');
 };
 
 gulp.task('default', ['sass', 'vendor-sass', 'compress', 'vendor-compress', 'watch'])
@@ -44,7 +44,7 @@ gulp.task('sass', function(){
     .pipe(sourcemaps.init())
   	.pipe(plumber({errorHandler: onError}))
     .pipe(sass().on('error', sass.logError)) // Using gulp-sass
-    .pipe(autoprefixer())
+    .pipe(autoprefixer({browsers: ['last 2 versions']}))
     .pipe(sourcemaps.write('./maps'))
     .pipe(gulp.dest('dist/styles'))
     .pipe(notify(notifyGeneric))
@@ -67,7 +67,7 @@ gulp.task('vendor-sass', function(){
 
 gulp.task('browserSync', function() {
   browserSync.init({
-      proxy: "local.wordpress.com"
+    proxy: "local.wordpress.com"
   })
 });
 
@@ -93,12 +93,12 @@ gulp.task('vendor-compress', function() {
 
 gulp.task('images', function(){
   return gulp.src('assets/images/**/*.+(png|jpg|gif|svg)')
-	.pipe(imagemin({
-	  // Setting interlaced to true
-	  interlaced: true
-	}))
-	.pipe(gulp.dest('dist/images'))
-	.pipe(notify(notifyGeneric));
+    .pipe(imagemin({
+	    // Setting interlaced to true
+	    interlaced: true
+	  }))
+	  .pipe(gulp.dest('dist/images'))
+	  .pipe(notify(notifyGeneric));
 });
 
 
